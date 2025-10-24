@@ -9,32 +9,54 @@ import qt_designer
 class ScriptThread(QThread):
     # 定义信号：用于向主线程发送执行结果（成功/失败信息）
     result_signal = pyqtSignal(bool, str)  # (是否成功, 信息)  pyqtSignal(bool, str) 定义的是信号返回给主线程的参数类型
+    log_signal = pyqtSignal(str)  # 新增：实时日志信号
 
-    def __init__(self, script_path):
+    def __init__(self, script_path, *args):
         super().__init__()
         self.script_path = script_path
+        self.args = args  # 保存需要传递给外部脚本的参数
 
     def run(self):
         """子线程执行的逻辑（自动在新线程中运行）"""
         try:
+            # 执行外部脚本，实时捕获输出
+            self.log_signal.emit(f"开始执行脚本: {self.script_path}")
+            self.log_signal.emit(f"传递的参数: {self.args}")
+
+            # 构造命令行：[python解释器, 脚本路径, 参数1, 参数2, ...]
+            cmd = [sys.executable, self.script_path] + list(self.args)
             # 执行外部脚本
-            result = subprocess.run(
-                [sys.executable, self.script_path],
-                check=True,
-                text=True,
-                encoding='utf-8',
+            process = subprocess.Popen(
+                cmd,  # 使用带参数的命令行
                 stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE
+                stderr=subprocess.STDOUT,  # 将标准错误合并到标准输出
+                text=True,
+                bufsize=1,
+                universal_newlines=True,
+                encoding='utf-8'
             )
-            # 执行成功，发送信号给主线程
-            self.result_signal.emit(True, f"脚本执行成功！输出：\n{result.stdout}")
-        except subprocess.CalledProcessError as e:
-            # 脚本运行出错
-            self.result_signal.emit(False, f"执行失败（错误码：{e.returncode}）\n错误信息：{e.stderr}")
+
+            # 实时读取输出并发送信号
+            while True:
+                output = process.stdout.readline()
+                if output == '' and process.poll() is not None:
+                    break
+                if output:
+                    # 发送实时日志到主线程
+                    self.log_signal.emit(output.strip())
+            # 获取最终返回码
+            return_code = process.wait()
+
+            if return_code == 0:
+                self.result_signal.emit(True, "脚本执行成功！")
+            else:
+                self.result_signal.emit(False, f"脚本执行失败，返回码: {return_code}")
+
         except FileNotFoundError:
             self.result_signal.emit(False, f"找不到脚本文件：{self.script_path}")
         except Exception as e:
             self.result_signal.emit(False, f"运行出错：{str(e)}")
+
 
 
 
@@ -56,7 +78,6 @@ class myMainWindow(QMainWindow, qt_designer.Ui_MainWindow):
         self.submit.clicked.connect(self.get_ui_content)
         self.setFixedSize(800, 600)  # 宽度=800，高度=600
         self.pushButton_2.clicked.connect(self.run_other_script)  # 绑定按钮事件
-
 
         # 设置LineEdit的验证
         self.setup_lineedit_validation(-90.0,90.0,self.lineEdit_2)  #南
@@ -95,10 +116,11 @@ class myMainWindow(QMainWindow, qt_designer.Ui_MainWindow):
     def get_ui_content(self):
         """获取UI内容"""
         # 获取ComboBox的值
-        selected_text = self.comboBox.currentText()
-        selected_index = self.comboBox.currentIndex()
-        print(f"选中的选项: {selected_text}")
-        print(f"选中的索引: {selected_index}")
+        selected_text_comboBox = self.comboBox.currentText()
+        print(f"选中的选项: {selected_text_comboBox}")
+        # 获取时间范围
+        selected_text_lineEdit = self.lineEdit.text()
+        print(f"想要的开始时间: {selected_text_lineEdit}")
 
 
     def init_combobox(self):
@@ -119,10 +141,21 @@ class myMainWindow(QMainWindow, qt_designer.Ui_MainWindow):
         """点击按钮时，启动子线程执行外部脚本（不阻塞主线程）"""
         script_path = "D:/Pycharmcode/test/submit_order.py"
 
+        # 获取 lineEdit 中的时间值（selected_text_lineEdit）
+        time_param = self.lineEdit.text().strip()  # 获取用户输入的时间
+
+        # 检查参数是否为空（可选，根据需求判断是否允许空参数）
+        if not time_param:
+            QMessageBox.warning(self, "警告", "请输入时间参数！")
+            return
+
+
         # 创建子线程实例
-        self.script_thread = ScriptThread(script_path)   # 这个参数由ScriptThread init 上面的定义的
+        self.script_thread = ScriptThread(script_path,time_param)   # 这个参数由ScriptThread init 上面的定义的
         # 绑定信号：子线程执行完毕后，调用回调函数处理结果
         self.script_thread.result_signal.connect(self.on_script_finished)
+
+        self.script_thread.log_signal.connect(self.on_script_log)
         # 启动子线程（会自动调用 run 方法）
         self.script_thread.start()
 
@@ -131,6 +164,7 @@ class myMainWindow(QMainWindow, qt_designer.Ui_MainWindow):
 
     def on_script_finished(self, success, message):
         """子线程执行完毕后的回调函数（在主线程中运行，可安全操作GUI）"""
+        print(f"[脚本执行完成] 成功: {success}, 消息: {message}")
         if success:
             QMessageBox.information(self, "成功", message)
         else:
@@ -139,7 +173,9 @@ class myMainWindow(QMainWindow, qt_designer.Ui_MainWindow):
         self.script_thread.quit()
         self.script_thread.wait()
 
-
+    def on_script_log(self, log_message):
+        """处理实时日志输出"""
+        print(f"[外部脚本日志] {log_message}")
 
 
 
