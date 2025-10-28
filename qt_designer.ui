@@ -63,7 +63,7 @@
        <enum>Qt::LeftToRight</enum>
       </property>
       <property name="text">
-       <string>风云卫星预约自动下载</string>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;风云卫星预约自动下载&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="textFormat">
        <enum>Qt::RichText</enum>
@@ -175,6 +175,12 @@ padding: 6px 0;  /* 上下内边距，让文字不贴边 */</string>
        <layout class="QHBoxLayout" name="horizontalLayout_6">
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="1,3">
+          <property name="topMargin">
+           <number>10</number>
+          </property>
+          <property name="bottomMargin">
+           <number>10</number>
+          </property>
           <item>
            <widget class="QLabel" name="label_10">
             <property name="sizePolicy">
@@ -233,6 +239,15 @@ background-color: white;</string>
         </item>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="1,3">
+          <property name="leftMargin">
+           <number>10</number>
+          </property>
+          <property name="topMargin">
+           <number>10</number>
+          </property>
+          <property name="bottomMargin">
+           <number>10</number>
+          </property>
           <item>
            <widget class="QLabel" name="label_11">
             <property name="sizePolicy">
@@ -338,7 +353,7 @@ padding: 6px 0;  /* 上下内边距，让文字不贴边 */</string>
         <item>
          <widget class="QLabel" name="label_6">
           <property name="text">
-           <string>南纬 (度数  . 分数)</string>
+           <string>南 (度数  . 分数)</string>
           </property>
          </widget>
         </item>
@@ -357,14 +372,14 @@ padding: 5px;  /* 内边距，文字不贴边 */
 background-color: white;</string>
           </property>
           <property name="text">
-           <string/>
+           <string>60.00</string>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QLabel" name="label_7">
           <property name="text">
-           <string>东经</string>
+           <string>东</string>
           </property>
          </widget>
         </item>
@@ -382,6 +397,9 @@ border-radius: 3px;  /* 圆角 */
 padding: 5px;  /* 内边距，文字不贴边 */
 background-color: white;</string>
           </property>
+          <property name="text">
+           <string>-180.00</string>
+          </property>
          </widget>
         </item>
        </layout>
@@ -391,7 +409,7 @@ background-color: white;</string>
         <item>
          <widget class="QLabel" name="label_8">
           <property name="text">
-           <string>北纬</string>
+           <string>北</string>
           </property>
          </widget>
         </item>
@@ -409,12 +427,15 @@ border-radius: 3px;  /* 圆角 */
 padding: 5px;  /* 内边距，文字不贴边 */
 background-color: white;</string>
           </property>
+          <property name="text">
+           <string>90.00</string>
+          </property>
          </widget>
         </item>
         <item>
          <widget class="QLabel" name="label_9">
           <property name="text">
-           <string>西经</string>
+           <string>西</string>
           </property>
          </widget>
         </item>
@@ -431,6 +452,9 @@ background-color: white;</string>
 border-radius: 3px;  /* 圆角 */
 padding: 5px;  /* 内边距，文字不贴边 */
 background-color: white;</string>
+          </property>
+          <property name="text">
+           <string>180.00</string>
           </property>
          </widget>
         </item>
@@ -542,6 +566,9 @@ padding: 6px 0;  /* 上下内边距，让文字不贴边 */</string>
 border-radius: 3px;  /* 圆角 */
 padding: 5px;  /* 内边距，文字不贴边 */
 background-color: white;</string>
+             </property>
+             <property name="text">
+              <string>D:\FYData</string>
              </property>
             </widget>
            </item>
