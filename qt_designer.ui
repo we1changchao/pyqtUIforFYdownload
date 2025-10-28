@@ -6,82 +6,175 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>647</width>
-    <height>484</height>
+    <width>643</width>
+    <height>573</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>600</width>
+    <height>400</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
    <layout class="QGridLayout" name="gridLayout">
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <property name="spacing">
+     <number>5</number>
+    </property>
     <item row="0" column="0">
-     <layout class="QVBoxLayout" name="verticalLayout_2">
+     <widget class="QLabel" name="FY_head">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>200</width>
+        <height>30</height>
+       </size>
+      </property>
+      <property name="font">
+       <font>
+        <family>Agency FB</family>
+        <pointsize>20</pointsize>
+       </font>
+      </property>
+      <property name="layoutDirection">
+       <enum>Qt::LeftToRight</enum>
+      </property>
+      <property name="text">
+       <string>风云卫星预约自动下载</string>
+      </property>
+      <property name="textFormat">
+       <enum>Qt::RichText</enum>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <layout class="QHBoxLayout" name="horizontalLayout_9" stretch="1,6">
+      <property name="spacing">
+       <number>10</number>
+      </property>
+      <property name="leftMargin">
+       <number>50</number>
+      </property>
+      <property name="topMargin">
+       <number>20</number>
+      </property>
+      <property name="rightMargin">
+       <number>50</number>
+      </property>
+      <property name="bottomMargin">
+       <number>20</number>
+      </property>
       <item>
-       <widget class="QLabel" name="FY_head">
+       <widget class="QLabel" name="label">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
-        <property name="minimumSize">
-         <size>
-          <width>200</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="layoutDirection">
-         <enum>Qt::LeftToRight</enum>
+        <property name="styleSheet">
+         <string notr="true">background-color: #abc0d6;  /* 浅蓝背景 */
+color: white;  /* 白色文字 */
+font-weight: bold;  /* 加粗 */
+font-size: 10pt;  /* 字号 */
+padding: 6px 0;  /* 上下内边距，让文字不贴边 */</string>
         </property>
         <property name="text">
-         <string>风云卫星预约下载计划</string>
+         <string>产品名称</string>
         </property>
-        <property name="textFormat">
-         <enum>Qt::RichText</enum>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
         </property>
        </widget>
       </item>
       <item>
-       <layout class="QFormLayout" name="formLayout">
-        <item row="0" column="0">
-         <widget class="QLabel" name="label">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="text">
-           <string>产品名称</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="1">
-         <widget class="QComboBox" name="comboBox">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QLabel" name="label_2">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="text">
-           <string>时间范围</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1">
-         <layout class="QHBoxLayout" name="horizontalLayout_7">
+       <widget class="QComboBox" name="comboBox">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border: 1px solid #CCCCCC;  /* 浅灰边框 */
+border-radius: 3px;  /* 圆角 */
+padding: 5px;  /* 内边距，文字不贴边 */
+background-color: white;</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="2" column="0">
+     <layout class="QHBoxLayout" name="horizontalLayout_7" stretch="1,6">
+      <property name="spacing">
+       <number>10</number>
+      </property>
+      <property name="leftMargin">
+       <number>50</number>
+      </property>
+      <property name="topMargin">
+       <number>20</number>
+      </property>
+      <property name="rightMargin">
+       <number>50</number>
+      </property>
+      <property name="bottomMargin">
+       <number>20</number>
+      </property>
+      <item>
+       <widget class="QLabel" name="label_2">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: #abc0d6;  /* 浅蓝背景 */
+color: white;  /* 白色文字 */
+font-weight: bold;  /* 加粗 */
+font-size: 10pt;  /* 字号 */
+padding: 6px 0;  /* 上下内边距，让文字不贴边 */</string>
+        </property>
+        <property name="text">
+         <string>时间范围</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_6">
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="1,3">
           <item>
            <widget class="QLabel" name="label_10">
             <property name="sizePolicy">
@@ -89,6 +182,12 @@
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>1</width>
+              <height>1</height>
+             </size>
             </property>
             <property name="text">
              <string>开始时间</string>
@@ -98,10 +197,22 @@
           <item>
            <widget class="QDateEdit" name="dateEdit_2">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>1</width>
+              <height>1</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">border: 1px solid #CCCCCC;  /* 浅灰边框 */
+border-radius: 3px;  /* 圆角 */
+padding: 5px;  /* 内边距，文字不贴边 */
+background-color: white;</string>
             </property>
             <property name="dateTime">
              <datetime>
@@ -118,6 +229,10 @@
             </property>
            </widget>
           </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="1,3">
           <item>
            <widget class="QLabel" name="label_11">
             <property name="sizePolicy">
@@ -125,6 +240,12 @@
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>1</width>
+              <height>1</height>
+             </size>
             </property>
             <property name="text">
              <string>结束时间</string>
@@ -134,10 +255,22 @@
           <item>
            <widget class="QDateEdit" name="dateEdit">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>1</width>
+              <height>1</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">border: 1px solid #CCCCCC;  /* 浅灰边框 */
+border-radius: 3px;  /* 圆角 */
+padding: 5px;  /* 内边距，文字不贴边 */
+background-color: white;</string>
             </property>
             <property name="dateTime">
              <datetime>
@@ -156,145 +289,299 @@
           </item>
          </layout>
         </item>
-        <item row="2" column="0">
-         <widget class="QLabel" name="label_3">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-            <horstretch>1</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
+       </layout>
+      </item>
+     </layout>
+    </item>
+    <item row="3" column="0">
+     <layout class="QHBoxLayout" name="horizontalLayout_8" stretch="1,3,3">
+      <property name="spacing">
+       <number>10</number>
+      </property>
+      <property name="leftMargin">
+       <number>50</number>
+      </property>
+      <property name="topMargin">
+       <number>20</number>
+      </property>
+      <property name="rightMargin">
+       <number>50</number>
+      </property>
+      <property name="bottomMargin">
+       <number>20</number>
+      </property>
+      <item>
+       <widget class="QLabel" name="label_3">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>1</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color:#abc0d6;  /* 浅蓝背景 */
+color: white;  /* 白色文字 */
+font-weight: bold;  /* 加粗 */
+font-size: 10pt;  /* 字号 */
+padding: 6px 0;  /* 上下内边距，让文字不贴边 */</string>
+        </property>
+        <property name="text">
+         <string>空间范围</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="QLabel" name="label_6">
           <property name="text">
-           <string>空间范围</string>
+           <string>南纬 (度数  . 分数)</string>
           </property>
          </widget>
         </item>
-        <item row="2" column="1">
-         <layout class="QVBoxLayout" name="verticalLayout">
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_5">
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_4">
-              <item>
-               <widget class="QLabel" name="label_6">
-                <property name="text">
-                 <string>南</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLineEdit" name="lineEdit_2">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="text">
-                 <string>(度数  . 分数)</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout">
-              <item>
-               <widget class="QLabel" name="label_8">
-                <property name="text">
-                 <string>北</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLineEdit" name="lineEdit_6">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_6">
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_3">
-              <item>
-               <widget class="QLabel" name="label_7">
-                <property name="text">
-                 <string>东</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLineEdit" name="lineEdit_5">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_2">
-              <item>
-               <widget class="QLabel" name="label_9">
-                <property name="text">
-                 <string>西</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLineEdit" name="lineEdit_7">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-           </layout>
-          </item>
-         </layout>
-        </item>
-        <item row="3" column="0">
-         <widget class="QLabel" name="label_5">
+        <item>
+         <widget class="QLineEdit" name="lineEdit_2">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
+          <property name="styleSheet">
+           <string notr="true">border: 1px solid #CCCCCC;  /* 浅灰边框 */
+border-radius: 3px;  /* 圆角 */
+padding: 5px;  /* 内边距，文字不贴边 */
+background-color: white;</string>
+          </property>
           <property name="text">
-           <string>下载地址</string>
+           <string/>
           </property>
          </widget>
         </item>
-        <item row="3" column="1">
-         <widget class="QLineEdit" name="lineEdit_4">
+        <item>
+         <widget class="QLabel" name="label_7">
+          <property name="text">
+           <string>东经</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="lineEdit_5">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">border: 1px solid #CCCCCC;  /* 浅灰边框 */
+border-radius: 3px;  /* 圆角 */
+padding: 5px;  /* 内边距，文字不贴边 */
+background-color: white;</string>
           </property>
          </widget>
         </item>
        </layout>
       </item>
       <item>
+       <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,0,0,0">
+        <item>
+         <widget class="QLabel" name="label_8">
+          <property name="text">
+           <string>北纬</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="lineEdit_6">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">border: 1px solid #CCCCCC;  /* 浅灰边框 */
+border-radius: 3px;  /* 圆角 */
+padding: 5px;  /* 内边距，文字不贴边 */
+background-color: white;</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_9">
+          <property name="text">
+           <string>西经</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="lineEdit_7">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">border: 1px solid #CCCCCC;  /* 浅灰边框 */
+border-radius: 3px;  /* 圆角 */
+padding: 5px;  /* 内边距，文字不贴边 */
+background-color: white;</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </item>
+    <item row="4" column="0">
+     <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="1,6">
+      <property name="spacing">
+       <number>10</number>
+      </property>
+      <property name="leftMargin">
+       <number>50</number>
+      </property>
+      <property name="topMargin">
+       <number>20</number>
+      </property>
+      <property name="rightMargin">
+       <number>50</number>
+      </property>
+      <property name="bottomMargin">
+       <number>20</number>
+      </property>
+      <item>
+       <widget class="QLabel" name="label_5">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>1</width>
+          <height>1</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: #abc0d6;  /* 浅蓝背景 */
+color: white;  /* 白色文字 */
+font-weight: bold;  /* 加粗 */
+font-size: 10pt;  /* 字号 */
+padding: 6px 0;  /* 上下内边距，让文字不贴边 */</string>
+        </property>
+        <property name="text">
+         <string>下载地址</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0">
+        <item>
+         <widget class="QFrame" name="frame">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+          <property name="lineWidth">
+           <number>1</number>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout" stretch="2,7">
+           <property name="leftMargin">
+            <number>9</number>
+           </property>
+           <item>
+            <widget class="QPushButton" name="pushButton_3">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>1</width>
+               <height>1</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>选择路径</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="lineEdit">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">border: 1px solid #CCCCCC;  /* 浅灰边框 */
+border-radius: 3px;  /* 圆角 */
+padding: 5px;  /* 内边距，文字不贴边 */
+background-color: white;</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </item>
+    <item row="5" column="0">
+     <layout class="QVBoxLayout" name="verticalLayout_3">
+      <property name="leftMargin">
+       <number>200</number>
+      </property>
+      <property name="rightMargin">
+       <number>200</number>
+      </property>
+      <item>
        <widget class="QPushButton" name="submit">
+        <property name="styleSheet">
+         <string notr="true">QPushButton {
+    background-color: #87b0f2;  /* 按钮背景色（比左侧标签深一点） */
+    color: white;  /* 文字白色 */
+    border: none;  /* 无边框 */
+    border-radius: 4px;  /* 圆角 */
+    padding: 8px 16px;  /* 内边距，按钮更饱满 */
+    font-size: 10pt;
+    minimum-height: 40px;  /* 按钮最小高度 */
+}
+/* 鼠标悬停时加深颜色 */
+QPushButton:hover {
+    background-color: #5A90C0;
+}
+/* 点击时更暗，模拟按压 */
+QPushButton:pressed {
+    background-color: #4A80B0;
+    transform: translateY(1px);  /* 轻微下移1px */
+}</string>
+        </property>
         <property name="text">
          <string>提交</string>
         </property>
@@ -302,6 +589,26 @@
       </item>
       <item>
        <widget class="QPushButton" name="pushButton_2">
+        <property name="styleSheet">
+         <string notr="true">QPushButton {
+    background-color: #87b0f2;  /* 按钮背景色（比左侧标签深一点） */
+    color: white;  /* 文字白色 */
+    border: none;  /* 无边框 */
+    border-radius: 4px;  /* 圆角 */
+    padding: 8px 16px;  /* 内边距，按钮更饱满 */
+    font-size: 10pt;
+    minimum-height: 40px;  /* 按钮最小高度 */
+}
+/* 鼠标悬停时加深颜色 */
+QPushButton:hover {
+    background-color: #5A90C0;
+}
+/* 点击时更暗，模拟按压 */
+QPushButton:pressed {
+    background-color: #4A80B0;
+    transform: translateY(1px);  /* 轻微下移1px */
+}</string>
+        </property>
         <property name="text">
          <string>确认启动下载程序</string>
         </property>
@@ -309,6 +616,26 @@
       </item>
       <item>
        <widget class="QPushButton" name="pushButton">
+        <property name="styleSheet">
+         <string notr="true">QPushButton {
+    background-color: #87b0f2;  /* 按钮背景色（比左侧标签深一点） */
+    color: white;  /* 文字白色 */
+    border: none;  /* 无边框 */
+    border-radius: 4px;  /* 圆角 */
+    padding: 8px 16px;  /* 内边距，按钮更饱满 */
+    font-size: 10pt;
+    minimum-height: 40px;  /* 按钮最小高度 */
+}
+/* 鼠标悬停时加深颜色 */
+QPushButton:hover {
+    background-color: #5A90C0;
+}
+/* 点击时更暗，模拟按压 */
+QPushButton:pressed {
+    background-color: #4A80B0;
+    transform: translateY(1px);  /* 轻微下移1px */
+}</string>
+        </property>
         <property name="text">
          <string>退出程序</string>
         </property>
@@ -324,7 +651,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>647</width>
+     <width>643</width>
      <height>22</height>
     </rect>
    </property>
@@ -332,7 +659,6 @@
  </widget>
  <tabstops>
   <tabstop>comboBox</tabstop>
-  <tabstop>lineEdit_4</tabstop>
   <tabstop>submit</tabstop>
  </tabstops>
  <resources/>

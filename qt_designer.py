@@ -14,13 +14,15 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(647, 484)
+        MainWindow.resize(643, 573)
+        MainWindow.setMinimumSize(QtCore.QSize(600, 400))
         self.centralwidget = QtWidgets.QWidget(MainWindow)
+        self.centralwidget.setStyleSheet("")
         self.centralwidget.setObjectName("centralwidget")
         self.gridLayout = QtWidgets.QGridLayout(self.centralwidget)
+        self.gridLayout.setContentsMargins(0, 0, 0, 0)
+        self.gridLayout.setSpacing(5)
         self.gridLayout.setObjectName("gridLayout")
-        self.verticalLayout_2 = QtWidgets.QVBoxLayout()
-        self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.FY_head = QtWidgets.QLabel(self.centralwidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
@@ -28,205 +30,378 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.FY_head.sizePolicy().hasHeightForWidth())
         self.FY_head.setSizePolicy(sizePolicy)
         self.FY_head.setMinimumSize(QtCore.QSize(200, 30))
+        font = QtGui.QFont()
+        font.setFamily("Agency FB")
+        font.setPointSize(20)
+        self.FY_head.setFont(font)
         self.FY_head.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.FY_head.setTextFormat(QtCore.Qt.RichText)
+        self.FY_head.setAlignment(QtCore.Qt.AlignCenter)
         self.FY_head.setObjectName("FY_head")
-        self.verticalLayout_2.addWidget(self.FY_head)
-        self.formLayout = QtWidgets.QFormLayout()
-        self.formLayout.setObjectName("formLayout")
+        self.gridLayout.addWidget(self.FY_head, 0, 0, 1, 1)
+        self.horizontalLayout_9 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_9.setContentsMargins(50, 20, 50, 20)
+        self.horizontalLayout_9.setSpacing(10)
+        self.horizontalLayout_9.setObjectName("horizontalLayout_9")
         self.label = QtWidgets.QLabel(self.centralwidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.label.sizePolicy().hasHeightForWidth())
         self.label.setSizePolicy(sizePolicy)
+        self.label.setStyleSheet("background-color: #abc0d6;  /* 浅蓝背景 */\n"
+"color: white;  /* 白色文字 */\n"
+"font-weight: bold;  /* 加粗 */\n"
+"font-size: 10pt;  /* 字号 */\n"
+"padding: 6px 0;  /* 上下内边距，让文字不贴边 */")
+        self.label.setAlignment(QtCore.Qt.AlignCenter)
         self.label.setObjectName("label")
-        self.formLayout.setWidget(0, QtWidgets.QFormLayout.LabelRole, self.label)
+        self.horizontalLayout_9.addWidget(self.label)
         self.comboBox = QtWidgets.QComboBox(self.centralwidget)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.comboBox.sizePolicy().hasHeightForWidth())
         self.comboBox.setSizePolicy(sizePolicy)
+        self.comboBox.setStyleSheet("border: 1px solid #CCCCCC;  /* 浅灰边框 */\n"
+"border-radius: 3px;  /* 圆角 */\n"
+"padding: 5px;  /* 内边距，文字不贴边 */\n"
+"background-color: white;")
         self.comboBox.setObjectName("comboBox")
-        self.formLayout.setWidget(0, QtWidgets.QFormLayout.FieldRole, self.comboBox)
+        self.horizontalLayout_9.addWidget(self.comboBox)
+        self.horizontalLayout_9.setStretch(0, 1)
+        self.horizontalLayout_9.setStretch(1, 6)
+        self.gridLayout.addLayout(self.horizontalLayout_9, 1, 0, 1, 1)
+        self.horizontalLayout_7 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_7.setContentsMargins(50, 20, 50, 20)
+        self.horizontalLayout_7.setSpacing(10)
+        self.horizontalLayout_7.setObjectName("horizontalLayout_7")
         self.label_2 = QtWidgets.QLabel(self.centralwidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.label_2.sizePolicy().hasHeightForWidth())
         self.label_2.setSizePolicy(sizePolicy)
+        self.label_2.setStyleSheet("background-color: #abc0d6;  /* 浅蓝背景 */\n"
+"color: white;  /* 白色文字 */\n"
+"font-weight: bold;  /* 加粗 */\n"
+"font-size: 10pt;  /* 字号 */\n"
+"padding: 6px 0;  /* 上下内边距，让文字不贴边 */")
+        self.label_2.setAlignment(QtCore.Qt.AlignCenter)
         self.label_2.setObjectName("label_2")
-        self.formLayout.setWidget(1, QtWidgets.QFormLayout.LabelRole, self.label_2)
-        self.horizontalLayout_7 = QtWidgets.QHBoxLayout()
-        self.horizontalLayout_7.setObjectName("horizontalLayout_7")
+        self.horizontalLayout_7.addWidget(self.label_2)
+        self.horizontalLayout_6 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_6.setObjectName("horizontalLayout_6")
+        self.horizontalLayout_4 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_4.setObjectName("horizontalLayout_4")
         self.label_10 = QtWidgets.QLabel(self.centralwidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.label_10.sizePolicy().hasHeightForWidth())
         self.label_10.setSizePolicy(sizePolicy)
+        self.label_10.setMinimumSize(QtCore.QSize(1, 1))
         self.label_10.setObjectName("label_10")
-        self.horizontalLayout_7.addWidget(self.label_10)
+        self.horizontalLayout_4.addWidget(self.label_10)
         self.dateEdit_2 = QtWidgets.QDateEdit(self.centralwidget)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.dateEdit_2.sizePolicy().hasHeightForWidth())
         self.dateEdit_2.setSizePolicy(sizePolicy)
+        self.dateEdit_2.setMinimumSize(QtCore.QSize(1, 1))
+        self.dateEdit_2.setStyleSheet("border: 1px solid #CCCCCC;  /* 浅灰边框 */\n"
+"border-radius: 3px;  /* 圆角 */\n"
+"padding: 5px;  /* 内边距，文字不贴边 */\n"
+"background-color: white;")
         self.dateEdit_2.setDateTime(QtCore.QDateTime(QtCore.QDate(2025, 10, 16), QtCore.QTime(0, 0, 0)))
         self.dateEdit_2.setCalendarPopup(True)
         self.dateEdit_2.setObjectName("dateEdit_2")
-        self.horizontalLayout_7.addWidget(self.dateEdit_2)
+        self.horizontalLayout_4.addWidget(self.dateEdit_2)
+        self.horizontalLayout_4.setStretch(0, 1)
+        self.horizontalLayout_4.setStretch(1, 3)
+        self.horizontalLayout_6.addLayout(self.horizontalLayout_4)
+        self.horizontalLayout_5 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_5.setObjectName("horizontalLayout_5")
         self.label_11 = QtWidgets.QLabel(self.centralwidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.label_11.sizePolicy().hasHeightForWidth())
         self.label_11.setSizePolicy(sizePolicy)
+        self.label_11.setMinimumSize(QtCore.QSize(1, 1))
         self.label_11.setObjectName("label_11")
-        self.horizontalLayout_7.addWidget(self.label_11)
+        self.horizontalLayout_5.addWidget(self.label_11)
         self.dateEdit = QtWidgets.QDateEdit(self.centralwidget)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.dateEdit.sizePolicy().hasHeightForWidth())
         self.dateEdit.setSizePolicy(sizePolicy)
+        self.dateEdit.setMinimumSize(QtCore.QSize(1, 1))
+        self.dateEdit.setStyleSheet("border: 1px solid #CCCCCC;  /* 浅灰边框 */\n"
+"border-radius: 3px;  /* 圆角 */\n"
+"padding: 5px;  /* 内边距，文字不贴边 */\n"
+"background-color: white;")
         self.dateEdit.setDateTime(QtCore.QDateTime(QtCore.QDate(2025, 10, 16), QtCore.QTime(0, 0, 0)))
         self.dateEdit.setCalendarPopup(True)
         self.dateEdit.setObjectName("dateEdit")
-        self.horizontalLayout_7.addWidget(self.dateEdit)
-        self.formLayout.setLayout(1, QtWidgets.QFormLayout.FieldRole, self.horizontalLayout_7)
+        self.horizontalLayout_5.addWidget(self.dateEdit)
+        self.horizontalLayout_5.setStretch(0, 1)
+        self.horizontalLayout_5.setStretch(1, 3)
+        self.horizontalLayout_6.addLayout(self.horizontalLayout_5)
+        self.horizontalLayout_7.addLayout(self.horizontalLayout_6)
+        self.horizontalLayout_7.setStretch(0, 1)
+        self.horizontalLayout_7.setStretch(1, 6)
+        self.gridLayout.addLayout(self.horizontalLayout_7, 2, 0, 1, 1)
+        self.horizontalLayout_8 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_8.setContentsMargins(50, 20, 50, 20)
+        self.horizontalLayout_8.setSpacing(10)
+        self.horizontalLayout_8.setObjectName("horizontalLayout_8")
         self.label_3 = QtWidgets.QLabel(self.centralwidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(1)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.label_3.sizePolicy().hasHeightForWidth())
         self.label_3.setSizePolicy(sizePolicy)
+        self.label_3.setStyleSheet("background-color:#abc0d6;  /* 浅蓝背景 */\n"
+"color: white;  /* 白色文字 */\n"
+"font-weight: bold;  /* 加粗 */\n"
+"font-size: 10pt;  /* 字号 */\n"
+"padding: 6px 0;  /* 上下内边距，让文字不贴边 */")
+        self.label_3.setAlignment(QtCore.Qt.AlignCenter)
         self.label_3.setObjectName("label_3")
-        self.formLayout.setWidget(2, QtWidgets.QFormLayout.LabelRole, self.label_3)
+        self.horizontalLayout_8.addWidget(self.label_3)
         self.verticalLayout = QtWidgets.QVBoxLayout()
         self.verticalLayout.setObjectName("verticalLayout")
-        self.horizontalLayout_5 = QtWidgets.QHBoxLayout()
-        self.horizontalLayout_5.setObjectName("horizontalLayout_5")
-        self.horizontalLayout_4 = QtWidgets.QHBoxLayout()
-        self.horizontalLayout_4.setObjectName("horizontalLayout_4")
         self.label_6 = QtWidgets.QLabel(self.centralwidget)
         self.label_6.setObjectName("label_6")
-        self.horizontalLayout_4.addWidget(self.label_6)
+        self.verticalLayout.addWidget(self.label_6)
         self.lineEdit_2 = QtWidgets.QLineEdit(self.centralwidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.lineEdit_2.sizePolicy().hasHeightForWidth())
         self.lineEdit_2.setSizePolicy(sizePolicy)
+        self.lineEdit_2.setStyleSheet("border: 1px solid #CCCCCC;  /* 浅灰边框 */\n"
+"border-radius: 3px;  /* 圆角 */\n"
+"padding: 5px;  /* 内边距，文字不贴边 */\n"
+"background-color: white;")
+        self.lineEdit_2.setText("")
         self.lineEdit_2.setObjectName("lineEdit_2")
-        self.horizontalLayout_4.addWidget(self.lineEdit_2)
-        self.horizontalLayout_5.addLayout(self.horizontalLayout_4)
-        self.horizontalLayout = QtWidgets.QHBoxLayout()
-        self.horizontalLayout.setObjectName("horizontalLayout")
-        self.label_8 = QtWidgets.QLabel(self.centralwidget)
-        self.label_8.setObjectName("label_8")
-        self.horizontalLayout.addWidget(self.label_8)
-        self.lineEdit_6 = QtWidgets.QLineEdit(self.centralwidget)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.lineEdit_6.sizePolicy().hasHeightForWidth())
-        self.lineEdit_6.setSizePolicy(sizePolicy)
-        self.lineEdit_6.setObjectName("lineEdit_6")
-        self.horizontalLayout.addWidget(self.lineEdit_6)
-        self.horizontalLayout_5.addLayout(self.horizontalLayout)
-        self.verticalLayout.addLayout(self.horizontalLayout_5)
-        self.horizontalLayout_6 = QtWidgets.QHBoxLayout()
-        self.horizontalLayout_6.setObjectName("horizontalLayout_6")
-        self.horizontalLayout_3 = QtWidgets.QHBoxLayout()
-        self.horizontalLayout_3.setObjectName("horizontalLayout_3")
+        self.verticalLayout.addWidget(self.lineEdit_2)
         self.label_7 = QtWidgets.QLabel(self.centralwidget)
         self.label_7.setObjectName("label_7")
-        self.horizontalLayout_3.addWidget(self.label_7)
+        self.verticalLayout.addWidget(self.label_7)
         self.lineEdit_5 = QtWidgets.QLineEdit(self.centralwidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.lineEdit_5.sizePolicy().hasHeightForWidth())
         self.lineEdit_5.setSizePolicy(sizePolicy)
+        self.lineEdit_5.setStyleSheet("border: 1px solid #CCCCCC;  /* 浅灰边框 */\n"
+"border-radius: 3px;  /* 圆角 */\n"
+"padding: 5px;  /* 内边距，文字不贴边 */\n"
+"background-color: white;")
         self.lineEdit_5.setObjectName("lineEdit_5")
-        self.horizontalLayout_3.addWidget(self.lineEdit_5)
-        self.horizontalLayout_6.addLayout(self.horizontalLayout_3)
-        self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
-        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+        self.verticalLayout.addWidget(self.lineEdit_5)
+        self.horizontalLayout_8.addLayout(self.verticalLayout)
+        self.verticalLayout_2 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_2.setObjectName("verticalLayout_2")
+        self.label_8 = QtWidgets.QLabel(self.centralwidget)
+        self.label_8.setObjectName("label_8")
+        self.verticalLayout_2.addWidget(self.label_8)
+        self.lineEdit_6 = QtWidgets.QLineEdit(self.centralwidget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.lineEdit_6.sizePolicy().hasHeightForWidth())
+        self.lineEdit_6.setSizePolicy(sizePolicy)
+        self.lineEdit_6.setStyleSheet("border: 1px solid #CCCCCC;  /* 浅灰边框 */\n"
+"border-radius: 3px;  /* 圆角 */\n"
+"padding: 5px;  /* 内边距，文字不贴边 */\n"
+"background-color: white;")
+        self.lineEdit_6.setObjectName("lineEdit_6")
+        self.verticalLayout_2.addWidget(self.lineEdit_6)
         self.label_9 = QtWidgets.QLabel(self.centralwidget)
         self.label_9.setObjectName("label_9")
-        self.horizontalLayout_2.addWidget(self.label_9)
+        self.verticalLayout_2.addWidget(self.label_9)
         self.lineEdit_7 = QtWidgets.QLineEdit(self.centralwidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.lineEdit_7.sizePolicy().hasHeightForWidth())
         self.lineEdit_7.setSizePolicy(sizePolicy)
+        self.lineEdit_7.setStyleSheet("border: 1px solid #CCCCCC;  /* 浅灰边框 */\n"
+"border-radius: 3px;  /* 圆角 */\n"
+"padding: 5px;  /* 内边距，文字不贴边 */\n"
+"background-color: white;")
         self.lineEdit_7.setObjectName("lineEdit_7")
-        self.horizontalLayout_2.addWidget(self.lineEdit_7)
-        self.horizontalLayout_6.addLayout(self.horizontalLayout_2)
-        self.verticalLayout.addLayout(self.horizontalLayout_6)
-        self.formLayout.setLayout(2, QtWidgets.QFormLayout.FieldRole, self.verticalLayout)
+        self.verticalLayout_2.addWidget(self.lineEdit_7)
+        self.horizontalLayout_8.addLayout(self.verticalLayout_2)
+        self.horizontalLayout_8.setStretch(0, 1)
+        self.horizontalLayout_8.setStretch(1, 3)
+        self.horizontalLayout_8.setStretch(2, 3)
+        self.gridLayout.addLayout(self.horizontalLayout_8, 3, 0, 1, 1)
+        self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_2.setContentsMargins(50, 20, 50, 20)
+        self.horizontalLayout_2.setSpacing(10)
+        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         self.label_5 = QtWidgets.QLabel(self.centralwidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.label_5.sizePolicy().hasHeightForWidth())
         self.label_5.setSizePolicy(sizePolicy)
+        self.label_5.setMinimumSize(QtCore.QSize(1, 1))
+        self.label_5.setStyleSheet("background-color: #abc0d6;  /* 浅蓝背景 */\n"
+"color: white;  /* 白色文字 */\n"
+"font-weight: bold;  /* 加粗 */\n"
+"font-size: 10pt;  /* 字号 */\n"
+"padding: 6px 0;  /* 上下内边距，让文字不贴边 */")
+        self.label_5.setAlignment(QtCore.Qt.AlignCenter)
         self.label_5.setObjectName("label_5")
-        self.formLayout.setWidget(3, QtWidgets.QFormLayout.LabelRole, self.label_5)
-        self.lineEdit_4 = QtWidgets.QLineEdit(self.centralwidget)
+        self.horizontalLayout_2.addWidget(self.label_5)
+        self.horizontalLayout_3 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_3.setObjectName("horizontalLayout_3")
+        self.frame = QtWidgets.QFrame(self.centralwidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.lineEdit_4.sizePolicy().hasHeightForWidth())
-        self.lineEdit_4.setSizePolicy(sizePolicy)
-        self.lineEdit_4.setObjectName("lineEdit_4")
-        self.formLayout.setWidget(3, QtWidgets.QFormLayout.FieldRole, self.lineEdit_4)
-        self.verticalLayout_2.addLayout(self.formLayout)
+        sizePolicy.setHeightForWidth(self.frame.sizePolicy().hasHeightForWidth())
+        self.frame.setSizePolicy(sizePolicy)
+        self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame.setLineWidth(1)
+        self.frame.setObjectName("frame")
+        self.horizontalLayout = QtWidgets.QHBoxLayout(self.frame)
+        self.horizontalLayout.setContentsMargins(9, -1, -1, -1)
+        self.horizontalLayout.setObjectName("horizontalLayout")
+        self.pushButton_3 = QtWidgets.QPushButton(self.frame)
+        self.pushButton_3.setEnabled(True)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.pushButton_3.sizePolicy().hasHeightForWidth())
+        self.pushButton_3.setSizePolicy(sizePolicy)
+        self.pushButton_3.setMinimumSize(QtCore.QSize(1, 1))
+        self.pushButton_3.setObjectName("pushButton_3")
+        self.horizontalLayout.addWidget(self.pushButton_3)
+        self.lineEdit = QtWidgets.QLineEdit(self.frame)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.lineEdit.sizePolicy().hasHeightForWidth())
+        self.lineEdit.setSizePolicy(sizePolicy)
+        self.lineEdit.setStyleSheet("border: 1px solid #CCCCCC;  /* 浅灰边框 */\n"
+"border-radius: 3px;  /* 圆角 */\n"
+"padding: 5px;  /* 内边距，文字不贴边 */\n"
+"background-color: white;")
+        self.lineEdit.setObjectName("lineEdit")
+        self.horizontalLayout.addWidget(self.lineEdit)
+        self.horizontalLayout.setStretch(0, 2)
+        self.horizontalLayout.setStretch(1, 7)
+        self.horizontalLayout_3.addWidget(self.frame)
+        self.horizontalLayout_2.addLayout(self.horizontalLayout_3)
+        self.horizontalLayout_2.setStretch(0, 1)
+        self.horizontalLayout_2.setStretch(1, 6)
+        self.gridLayout.addLayout(self.horizontalLayout_2, 4, 0, 1, 1)
+        self.verticalLayout_3 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_3.setContentsMargins(200, -1, 200, -1)
+        self.verticalLayout_3.setObjectName("verticalLayout_3")
         self.submit = QtWidgets.QPushButton(self.centralwidget)
+        self.submit.setStyleSheet("QPushButton {\n"
+"    background-color: #87b0f2;  /* 按钮背景色（比左侧标签深一点） */\n"
+"    color: white;  /* 文字白色 */\n"
+"    border: none;  /* 无边框 */\n"
+"    border-radius: 4px;  /* 圆角 */\n"
+"    padding: 8px 16px;  /* 内边距，按钮更饱满 */\n"
+"    font-size: 10pt;\n"
+"    minimum-height: 40px;  /* 按钮最小高度 */\n"
+"}\n"
+"/* 鼠标悬停时加深颜色 */\n"
+"QPushButton:hover {\n"
+"    background-color: #5A90C0;\n"
+"}\n"
+"/* 点击时更暗，模拟按压 */\n"
+"QPushButton:pressed {\n"
+"    background-color: #4A80B0;\n"
+"    transform: translateY(1px);  /* 轻微下移1px */\n"
+"}")
         self.submit.setObjectName("submit")
-        self.verticalLayout_2.addWidget(self.submit)
+        self.verticalLayout_3.addWidget(self.submit)
         self.pushButton_2 = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_2.setStyleSheet("QPushButton {\n"
+"    background-color: #87b0f2;  /* 按钮背景色（比左侧标签深一点） */\n"
+"    color: white;  /* 文字白色 */\n"
+"    border: none;  /* 无边框 */\n"
+"    border-radius: 4px;  /* 圆角 */\n"
+"    padding: 8px 16px;  /* 内边距，按钮更饱满 */\n"
+"    font-size: 10pt;\n"
+"    minimum-height: 40px;  /* 按钮最小高度 */\n"
+"}\n"
+"/* 鼠标悬停时加深颜色 */\n"
+"QPushButton:hover {\n"
+"    background-color: #5A90C0;\n"
+"}\n"
+"/* 点击时更暗，模拟按压 */\n"
+"QPushButton:pressed {\n"
+"    background-color: #4A80B0;\n"
+"    transform: translateY(1px);  /* 轻微下移1px */\n"
+"}")
         self.pushButton_2.setObjectName("pushButton_2")
-        self.verticalLayout_2.addWidget(self.pushButton_2)
+        self.verticalLayout_3.addWidget(self.pushButton_2)
         self.pushButton = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton.setStyleSheet("QPushButton {\n"
+"    background-color: #87b0f2;  /* 按钮背景色（比左侧标签深一点） */\n"
+"    color: white;  /* 文字白色 */\n"
+"    border: none;  /* 无边框 */\n"
+"    border-radius: 4px;  /* 圆角 */\n"
+"    padding: 8px 16px;  /* 内边距，按钮更饱满 */\n"
+"    font-size: 10pt;\n"
+"    minimum-height: 40px;  /* 按钮最小高度 */\n"
+"}\n"
+"/* 鼠标悬停时加深颜色 */\n"
+"QPushButton:hover {\n"
+"    background-color: #5A90C0;\n"
+"}\n"
+"/* 点击时更暗，模拟按压 */\n"
+"QPushButton:pressed {\n"
+"    background-color: #4A80B0;\n"
+"    transform: translateY(1px);  /* 轻微下移1px */\n"
+"}")
         self.pushButton.setObjectName("pushButton")
-        self.verticalLayout_2.addWidget(self.pushButton)
-        self.gridLayout.addLayout(self.verticalLayout_2, 0, 0, 1, 1)
+        self.verticalLayout_3.addWidget(self.pushButton)
+        self.gridLayout.addLayout(self.verticalLayout_3, 5, 0, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
         self.menuBar = QtWidgets.QMenuBar(MainWindow)
-        self.menuBar.setGeometry(QtCore.QRect(0, 0, 647, 22))
+        self.menuBar.setGeometry(QtCore.QRect(0, 0, 643, 22))
         self.menuBar.setObjectName("menuBar")
         MainWindow.setMenuBar(self.menuBar)
 
         self.retranslateUi(MainWindow)
         self.pushButton.clicked.connect(MainWindow.close) # type: ignore
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
-        MainWindow.setTabOrder(self.comboBox, self.lineEdit_4)
-        MainWindow.setTabOrder(self.lineEdit_4, self.submit)
+        MainWindow.setTabOrder(self.comboBox, self.submit)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.FY_head.setText(_translate("MainWindow", "风云卫星预约下载计划"))
+        self.FY_head.setText(_translate("MainWindow", "风云卫星预约自动下载"))
         self.label.setText(_translate("MainWindow", "产品名称"))
         self.label_2.setText(_translate("MainWindow", "时间范围"))
         self.label_10.setText(_translate("MainWindow", "开始时间"))
         self.label_11.setText(_translate("MainWindow", "结束时间"))
         self.label_3.setText(_translate("MainWindow", "空间范围"))
-        self.label_6.setText(_translate("MainWindow", "南"))
-        self.lineEdit_2.setText(_translate("MainWindow", "(度数  . 分数)"))
-        self.label_8.setText(_translate("MainWindow", "北"))
-        self.label_7.setText(_translate("MainWindow", "东"))
-        self.label_9.setText(_translate("MainWindow", "西"))
+        self.label_6.setText(_translate("MainWindow", "南纬 (度数  . 分数)"))
+        self.label_7.setText(_translate("MainWindow", "东经"))
+        self.label_8.setText(_translate("MainWindow", "北纬"))
+        self.label_9.setText(_translate("MainWindow", "西经"))
         self.label_5.setText(_translate("MainWindow", "下载地址"))
+        self.pushButton_3.setText(_translate("MainWindow", "选择路径"))
         self.submit.setText(_translate("MainWindow", "提交"))
         self.pushButton_2.setText(_translate("MainWindow", "确认启动下载程序"))
         self.pushButton.setText(_translate("MainWindow", "退出程序"))

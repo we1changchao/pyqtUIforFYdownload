@@ -1,6 +1,7 @@
 import sys
 import subprocess
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
+from PyQt5.QtWidgets import QHBoxLayout, QLineEdit, QPushButton, QFileDialog
 from PyQt5.QtCore import QThread, pyqtSignal  # 导入线程相关模块
 from PyQt5.QtGui import QDoubleValidator
 import qt_designer
@@ -74,9 +75,11 @@ class myMainWindow(QMainWindow, qt_designer.Ui_MainWindow):
         self.setupUi(self)
         # 初始化ComboBox选项
         self.init_combobox()
+        # 初始化QFrame内的文件夹选择控件
+        self.init_folder_selector()
         # 点击提交的信号与槽
         self.submit.clicked.connect(self.get_ui_content)
-        self.setFixedSize(800, 600)  # 宽度=800，高度=600
+        self.setFixedSize(1000, 800)  # 宽度=800，高度=600
         self.pushButton_2.clicked.connect(self.run_other_script)  # 绑定按钮事件
 
         # 设置LineEdit的验证
@@ -129,7 +132,7 @@ class myMainWindow(QMainWindow, qt_designer.Ui_MainWindow):
         self.comboBox.clear()
 
         # 添加选项
-        self.comboBox.addItem("请选择")
+        self.comboBox.addItem("请选择你要下载的卫星型号及数据类型")
         self.comboBox.addItem("FY-3D:MERSI")
         self.comboBox.addItem("FY-3E:MERSI")
 
@@ -177,10 +180,26 @@ class myMainWindow(QMainWindow, qt_designer.Ui_MainWindow):
         """处理实时日志输出"""
         print(f"[外部脚本日志] {log_message}")
 
+    def init_folder_selector(self):
+        """在名为frame的QFrame中添加文件夹选择控件"""
+        # 1. 获取QFrame控件（假设Qt Designer中其objectName为"frame"）
+        frame = self.frame  # 直接通过objectName获取QFrame
+
+        self.pushButton_3.clicked.connect(self.choose_folder)  # 绑定点击事件
 
 
+    def choose_folder(self):
+        """弹出文件夹选择对话框，并将选中路径显示到输入框"""
+        # 弹出文件夹选择对话框，初始路径设为桌面（可自定义）
+        folder_path = QFileDialog.getExistingDirectory(
+            self,  # 父窗口
+            "选择文件夹",  # 对话框标题
+            "C:/Users/jiage/Desktop"  # 初始目录
+        )
 
-
+        # 如果用户选择了文件夹（非取消），则更新输入框
+        if folder_path:
+            self.lineEdit.setText(folder_path)
 
 
 
