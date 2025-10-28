@@ -119,8 +119,8 @@ class myMainWindow(QMainWindow, qt_designer.Ui_MainWindow):
         selected_text_comboBox = self.comboBox.currentText()
         print(f"选中的选项: {selected_text_comboBox}")
         # 获取时间范围
-        selected_text_lineEdit = self.lineEdit.text()
-        print(f"想要的开始时间: {selected_text_lineEdit}")
+        selected_text_dateEdit_2 = self.dateEdit_2.text()
+        print(f"想要的开始时间: {selected_text_dateEdit_2}")
 
 
     def init_combobox(self):
@@ -141,8 +141,8 @@ class myMainWindow(QMainWindow, qt_designer.Ui_MainWindow):
         """点击按钮时，启动子线程执行外部脚本（不阻塞主线程）"""
         script_path = "D:/Pycharmcode/test/submit_order.py"
 
-        # 获取 lineEdit 中的时间值（selected_text_lineEdit）
-        time_param = self.lineEdit.text().strip()  # 获取用户输入的时间
+        # 获取 dateEdit_2 中的时间值（dateEdit_2）
+        time_param = self.dateEdit_2.text().strip()  # 获取用户输入的时间
 
         # 检查参数是否为空（可选，根据需求判断是否允许空参数）
         if not time_param:
