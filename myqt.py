@@ -5,7 +5,7 @@ from PyQt5.QtWidgets import QHBoxLayout, QLineEdit, QPushButton, QFileDialog
 from PyQt5.QtCore import QThread, pyqtSignal  # 导入线程相关模块
 from PyQt5.QtGui import QDoubleValidator
 import qt_designer
-
+import time
 # 1. 定义一个子线程类，用于执行外部脚本（不阻塞主线程）
 class ScriptThread(QThread):
     # 定义信号：用于向主线程发送执行结果（成功/失败信息）
@@ -37,14 +37,24 @@ class ScriptThread(QThread):
                 encoding='utf-8'
             )
 
+            last_emit_time = time.time()
+            buffer = ""
             # 实时读取输出并发送信号
             while True:
                 output = process.stdout.readline()
                 if output == '' and process.poll() is not None:
                     break
                 if output:
-                    # 发送实时日志到主线程
-                    self.log_signal.emit(output.strip())
+                    buffer += output.strip() + "\n"
+                    # 每隔 0.5 秒才发一次信号
+                    if time.time() - last_emit_time > 1:
+                        self.log_signal.emit(buffer.strip())
+                        buffer = ""
+                        last_emit_time = time.time()
+            # 剩余输出发送
+            if buffer.strip():
+                self.log_signal.emit(buffer.strip())
+
             # 获取最终返回码
             return_code = process.wait()
 
@@ -120,12 +130,46 @@ class myMainWindow(QMainWindow, qt_designer.Ui_MainWindow):
     """获取UI内容"""
     def get_ui_content(self):
 
-        # 获取ComboBox的值
-        selected_text_comboBox = self.comboBox.currentText()
-        print(f"选中的选项: {selected_text_comboBox}")
-        # 获取时间范围
-        selected_text_dateEdit_2 = self.dateEdit_2.text()
-        print(f"想要的开始时间: {selected_text_dateEdit_2}")
+        """执行第二个独立外部程序"""
+        script_path = "D:/Pycharmcode/test/download.py"
+
+        # 第二个程序的参数，比如读取上一个程序生成的 txt 文件路径
+        txt_path = "D:/Pycharmcode/test/download.txt"
+
+        # 如果上一个线程还在运行，避免资源冲突
+        if hasattr(self, 'second_thread') and self.second_thread.isRunning():
+            QMessageBox.warning(self, "警告", "第二个程序正在运行，请稍后再试。")
+            return
+
+        # 创建独立线程实例
+        self.second_thread = ScriptThread(script_path, txt_path)
+
+        # 绑定信号槽
+        self.second_thread.result_signal.connect(self.on_second_finished)
+        self.second_thread.log_signal.connect(self.on_second_log)
+
+        # 启动线程
+        self.second_thread.start()
+
+        QMessageBox.information(self, "提示", "第二个外部程序已启动。")
+
+    def on_second_finished(self, success, message):
+        """第二个脚本执行完毕后的处理"""
+        print(f"[第二脚本完成] 成功: {success}, 消息: {message}")
+        if success:
+            QMessageBox.information(self, "成功", message)
+        else:
+            QMessageBox.critical(self, "失败", message)
+
+        # 清理线程资源
+        self.second_thread.quit()
+        self.second_thread.wait()
+        self.second_thread.deleteLater()
+        self.second_thread = None  # 清除引用，防止野指针
+
+    def on_second_log(self, log_message):
+        """第二脚本的实时日志"""
+        print(f"[第二脚本日志] {log_message}")
 
     """初始化ComboBox选项"""
     def init_combobox(self):
@@ -188,6 +232,8 @@ class myMainWindow(QMainWindow, qt_designer.Ui_MainWindow):
         # 线程结束后清理资源
         self.script_thread.quit()
         self.script_thread.wait()
+        self.script_thread.deleteLater()
+        self.script_thread = None
     # run_other_script 中的槽函数
     def on_script_log(self, log_message):
         """处理实时日志输出"""
