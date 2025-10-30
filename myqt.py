@@ -6,11 +6,14 @@ from PyQt5.QtCore import QThread, pyqtSignal  # 导入线程相关模块
 from PyQt5.QtGui import QDoubleValidator
 import qt_designer
 import time
+import re
+from PyQt5.QtCore import QTimer  # 导入定时器
 # 1. 定义一个子线程类，用于执行外部脚本（不阻塞主线程）
 class ScriptThread(QThread):
     # 定义信号：用于向主线程发送执行结果（成功/失败信息）
     result_signal = pyqtSignal(bool, str)  # (是否成功, 信息)  pyqtSignal(bool, str) 定义的是信号返回给主线程的参数类型
     log_signal = pyqtSignal(str)  # 实时日志信号
+    need_retry_signal = pyqtSignal()  # 无参数，仅通知需要重试
 
     def __init__(self, script_path, *args):
         super().__init__()
@@ -39,12 +42,17 @@ class ScriptThread(QThread):
 
             last_emit_time = time.time()
             buffer = ""
+            need_retry = False  # 标记是否需要重试
             # 实时读取输出并发送信号
             while True:
                 output = process.stdout.readline()
                 if output == '' and process.poll() is not None:
                     break
                 if output:
+                    # 检查当前输出是否包含目标字符串
+                    if re.search(r"订单状态.*准备中", output):
+                        need_retry = True  # 标记需要重试
+
                     buffer += output.strip() + "\n"
                     # 每隔 0.5 秒才发一次信号
                     if time.time() - last_emit_time > 1:
@@ -57,6 +65,8 @@ class ScriptThread(QThread):
 
             # 获取最终返回码
             return_code = process.wait()
+            if need_retry:
+                self.need_retry_signal.emit()  # 发送需要重试的信号
 
             if return_code == 0:
                 self.result_signal.emit(True, "脚本执行成功！")
@@ -81,6 +91,7 @@ class ScriptThread(QThread):
 class myMainWindow(QMainWindow, qt_designer.Ui_MainWindow):
     def __init__(self):
         super().__init__()
+
         # 初始化 UI（来自转换后的类）
         self.setupUi(self)
         # 初始化ComboBox选项
@@ -90,6 +101,12 @@ class myMainWindow(QMainWindow, qt_designer.Ui_MainWindow):
         # 点击提交的信号与槽
         self.submit.clicked.connect(self.get_ui_content)
         self.pushButton_2.clicked.connect(self.run_other_script)  # 绑定按钮事件
+
+        # 初始化重试定时器
+        self.retry_timer = QTimer(self)
+        self.retry_timer.setInterval(5 * 60 * 1000)  # 5分钟（毫秒）
+        self.retry_timer.timeout.connect(self.retry_download)  # 定时到后执行重试
+
 
         self.setFixedSize(1000, 800)  # 宽度=800，高度=600
 
@@ -132,9 +149,11 @@ class myMainWindow(QMainWindow, qt_designer.Ui_MainWindow):
 
         """执行第二个独立外部程序"""
         script_path = "D:/Pycharmcode/test/download.py"
-
         # 第二个程序的参数，比如读取上一个程序生成的 txt 文件路径
         txt_path = "D:/Pycharmcode/test/download.txt"
+
+        # 保存download.py的参数（用于重试）
+        self.download_args   = (script_path, txt_path)
 
         # 如果上一个线程还在运行，避免资源冲突
         if hasattr(self, 'second_thread') and self.second_thread.isRunning():
@@ -147,7 +166,8 @@ class myMainWindow(QMainWindow, qt_designer.Ui_MainWindow):
         # 绑定信号槽
         self.second_thread.result_signal.connect(self.on_second_finished)
         self.second_thread.log_signal.connect(self.on_second_log)
-
+        # 关键：绑定“需要重试download.py”的信号
+        self.second_thread.need_retry_signal.connect(self.prepare_retry_download)
         # 启动线程
         self.second_thread.start()
 
@@ -207,7 +227,7 @@ class myMainWindow(QMainWindow, qt_designer.Ui_MainWindow):
 
         external_save_dir = self.lineEdit.text().strip()
         # 获取卫星类型信息
-        selected_text_comboBox = self.comboBox.currentText().strip()\
+        selected_text_comboBox = self.comboBox.currentText().strip()
 
 
         # 创建子线程实例
@@ -254,6 +274,32 @@ class myMainWindow(QMainWindow, qt_designer.Ui_MainWindow):
             self.lineEdit.setText(folder_path)
 
 
+
+    # 【新增1】准备重试：收到信号后提示并启动定时器
+    def prepare_retry_download(self):
+        if not self.download_args:
+            QMessageBox.warning(self, "警告", "未找到download.py的执行参数，无法重试")
+            return
+        # 显示提示并启动定时器
+        self.statusBar().showMessage("订单未准备成功，5分钟后自动重试下载程序...")
+        QMessageBox.information(self, "提示", "订单未准备成功，将在5分钟后自动执行download.py...")
+        self.retry_timer.start()  # 启动5分钟定时器
+
+    # 【新增2】定时器触发后，执行download.py
+    def retry_download(self):
+        self.retry_timer.stop()  # 停止定时器
+        if not self.download_args:
+            self.statusBar().showMessage("无download.py参数，重试失败")
+            return
+
+        # 从保存的参数中获取路径和参数
+        script_path, txt_path = self.download_args
+        # 启动download.py
+        self.second_thread = ScriptThread(script_path, txt_path)
+        self.second_thread.result_signal.connect(self.on_second_finished)
+        self.second_thread.log_signal.connect(self.on_second_log)
+        self.second_thread.start()
+        self.statusBar().showMessage("正在重试执行download.py...")
 
 
 
