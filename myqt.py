@@ -156,7 +156,7 @@ class myMainWindow(QMainWindow, qt_designer.Ui_MainWindow):
 
         # 如果上一个线程还在运行，避免资源冲突
         if hasattr(self, 'second_thread') and self.second_thread.isRunning():
-            QMessageBox.warning(self, "警告", "第二个程序正在运行，请稍后再试。")
+            QMessageBox.warning(self, "警告", "数据下载程序正在运行，请稍后再试。")
             return
 
         # 创建独立线程实例
@@ -168,7 +168,7 @@ class myMainWindow(QMainWindow, qt_designer.Ui_MainWindow):
         self.second_thread.need_retry_signal.connect(self.prepare_retry_download)  # 绑定“需要重试download.py”的信号
         self.second_thread.start()  # 启动线程
 
-        QMessageBox.information(self, "提示", "第二个外部程序已启动。")
+        QMessageBox.information(self, "提示", "数据下载程序已启动。")
 
     def on_second_finished(self, success, message):
         """第二个脚本执行完毕后的处理"""
@@ -185,6 +185,27 @@ class myMainWindow(QMainWindow, qt_designer.Ui_MainWindow):
         self.second_thread = None  # 清除引用，防止野指针
 
     def on_second_log(self, log_message):
+        if not log_message:
+            return
+
+        # 定义正则表达式：匹配“下载进度: 数字%”格式（支持整数/小数百分比）
+        # 例如：“下载进度: 5%”、“下载进度: 10.50%”、“下载进度: 100%”
+        pattern = r"下载进度: .*?%"
+
+        # 用正则匹配日志内容，提取所有符合格式的行
+        matches = re.findall(pattern, log_message)
+
+        # 如果有匹配到的内容，才显示在UI上
+        if matches:
+            # 提取完整的进度字符串（findall只返回分组，这里重新匹配完整内容）
+            progress_line = re.search(pattern, log_message).group()
+            # 格式化显示（添加时间戳）
+            timestamp = time.strftime("%H:%M:%S", time.localtime())
+            formatted_log = f"[{timestamp}] {progress_line}\n"
+            # 显示到QTextEdit并滚动到底部
+            self.textEdit.append(formatted_log)
+            self.textEdit.moveCursor(self.textEdit.textCursor().End)
+
         """第二脚本的实时日志"""
         print(f"[下载数据脚本日志] {log_message}")
 
@@ -239,7 +260,7 @@ class myMainWindow(QMainWindow, qt_designer.Ui_MainWindow):
         self.script_thread.start()  # 启动子线程（会自动调用 run 方法）
 
         # 可以显示一个提示，告知用户脚本已开始执行
-        QMessageBox.information(self, "提示", "外部下载程序已启动，正在后台运行...")
+        QMessageBox.information(self, "提示", "订单提交程序已启动，正在后台运行...")
 
     def on_script_finished(self, success, message):
         """子线程执行完毕后的回调函数（在主线程中运行，可安全操作GUI）"""
