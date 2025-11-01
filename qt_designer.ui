@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>657</width>
-    <height>629</height>
+    <height>701</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -24,7 +24,7 @@
     <string notr="true"/>
    </property>
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0" colspan="2">
+    <item row="0" column="0">
      <widget class="QLabel" name="FY_head">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
@@ -58,7 +58,7 @@
       </property>
      </widget>
     </item>
-    <item row="1" column="0" colspan="2">
+    <item row="1" column="0">
      <layout class="QHBoxLayout" name="horizontalLayout_9" stretch="1,6">
       <property name="spacing">
        <number>10</number>
@@ -116,7 +116,7 @@ background-color: white;</string>
       </item>
      </layout>
     </item>
-    <item row="2" column="0" colspan="2">
+    <item row="2" column="0">
      <layout class="QHBoxLayout" name="horizontalLayout_7" stretch="1,6">
       <property name="spacing">
        <number>10</number>
@@ -293,7 +293,7 @@ background-color: white;</string>
       </item>
      </layout>
     </item>
-    <item row="3" column="0" colspan="2">
+    <item row="3" column="0">
      <layout class="QHBoxLayout" name="horizontalLayout_8" stretch="1,3,3">
       <property name="spacing">
        <number>10</number>
@@ -364,7 +364,7 @@ background-color: white;</string>
         <item>
          <widget class="QLabel" name="label_7">
           <property name="text">
-           <string>东</string>
+           <string>西</string>
           </property>
          </widget>
         </item>
@@ -420,7 +420,7 @@ background-color: white;</string>
         <item>
          <widget class="QLabel" name="label_9">
           <property name="text">
-           <string>西</string>
+           <string>东</string>
           </property>
          </widget>
         </item>
@@ -447,7 +447,7 @@ background-color: white;</string>
       </item>
      </layout>
     </item>
-    <item row="4" column="0" colspan="2">
+    <item row="4" column="0">
      <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="1,6">
       <property name="spacing">
        <number>10</number>
@@ -565,44 +565,25 @@ background-color: white;</string>
      </layout>
     </item>
     <item row="5" column="0">
-     <layout class="QVBoxLayout" name="verticalLayout_3">
+     <layout class="QHBoxLayout" name="horizontalLayout_10">
       <property name="leftMargin">
-       <number>0</number>
-      </property>
-      <property name="rightMargin">
-       <number>0</number>
+       <number>50</number>
       </property>
       <item>
-       <widget class="QPushButton" name="submit">
-        <property name="styleSheet">
-         <string notr="true">QPushButton {
-    background-color: #87b0f2;  /* 按钮背景色（比左侧标签深一点） */
-    color: white;  /* 文字白色 */
-    border: none;  /* 无边框 */
-    border-radius: 4px;  /* 圆角 */
-    padding: 8px 16px;  /* 内边距，按钮更饱满 */
-    font-size: 10pt;
-    minimum-height: 40px;  /* 按钮最小高度 */
-}
-/* 鼠标悬停时加深颜色 */
-QPushButton:hover {
-    background-color: #5A90C0;
-}
-/* 点击时更暗，模拟按压 */
-QPushButton:pressed {
-    background-color: #4A80B0;
-    transform: translateY(1px);  /* 轻微下移1px */
-}</string>
-        </property>
-        <property name="text">
-         <string>提交</string>
-        </property>
-       </widget>
+       <widget class="QTextEdit" name="textEdit"/>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton_2">
-        <property name="styleSheet">
-         <string notr="true">QPushButton {
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <property name="leftMargin">
+         <number>30</number>
+        </property>
+        <property name="rightMargin">
+         <number>30</number>
+        </property>
+        <item>
+         <widget class="QPushButton" name="pushButton_2">
+          <property name="styleSheet">
+           <string notr="true">QPushButton {
     background-color: #87b0f2;  /* 按钮背景色（比左侧标签深一点） */
     color: white;  /* 文字白色 */
     border: none;  /* 无边框 */
@@ -620,16 +601,16 @@ QPushButton:pressed {
     background-color: #4A80B0;
     transform: translateY(1px);  /* 轻微下移1px */
 }</string>
-        </property>
-        <property name="text">
-         <string>确认启动下载程序</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="pushButton">
-        <property name="styleSheet">
-         <string notr="true">QPushButton {
+          </property>
+          <property name="text">
+           <string>订单提交</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="submit">
+          <property name="styleSheet">
+           <string notr="true">QPushButton {
     background-color: #87b0f2;  /* 按钮背景色（比左侧标签深一点） */
     color: white;  /* 文字白色 */
     border: none;  /* 无边框 */
@@ -647,16 +628,42 @@ QPushButton:pressed {
     background-color: #4A80B0;
     transform: translateY(1px);  /* 轻微下移1px */
 }</string>
-        </property>
-        <property name="text">
-         <string>退出程序</string>
-        </property>
-       </widget>
+          </property>
+          <property name="text">
+           <string>数据下载</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton">
+          <property name="styleSheet">
+           <string notr="true">QPushButton {
+    background-color: #87b0f2;  /* 按钮背景色（比左侧标签深一点） */
+    color: white;  /* 文字白色 */
+    border: none;  /* 无边框 */
+    border-radius: 4px;  /* 圆角 */
+    padding: 8px 16px;  /* 内边距，按钮更饱满 */
+    font-size: 10pt;
+    minimum-height: 40px;  /* 按钮最小高度 */
+}
+/* 鼠标悬停时加深颜色 */
+QPushButton:hover {
+    background-color: #5A90C0;
+}
+/* 点击时更暗，模拟按压 */
+QPushButton:pressed {
+    background-color: #4A80B0;
+    transform: translateY(1px);  /* 轻微下移1px */
+}</string>
+          </property>
+          <property name="text">
+           <string>退出程序</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
      </layout>
-    </item>
-    <item row="5" column="1">
-     <widget class="QTextEdit" name="textEdit"/>
     </item>
    </layout>
   </widget>

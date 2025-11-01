@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(657, 629)
+        MainWindow.resize(657, 701)
         MainWindow.setMinimumSize(QtCore.QSize(600, 400))
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setStyleSheet("")
@@ -36,7 +36,7 @@ class Ui_MainWindow(object):
         self.FY_head.setTextFormat(QtCore.Qt.RichText)
         self.FY_head.setAlignment(QtCore.Qt.AlignCenter)
         self.FY_head.setObjectName("FY_head")
-        self.gridLayout.addWidget(self.FY_head, 0, 0, 1, 2)
+        self.gridLayout.addWidget(self.FY_head, 0, 0, 1, 1)
         self.horizontalLayout_9 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_9.setContentsMargins(50, 20, 50, 20)
         self.horizontalLayout_9.setSpacing(10)
@@ -69,7 +69,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_9.addWidget(self.comboBox)
         self.horizontalLayout_9.setStretch(0, 1)
         self.horizontalLayout_9.setStretch(1, 6)
-        self.gridLayout.addLayout(self.horizontalLayout_9, 1, 0, 1, 2)
+        self.gridLayout.addLayout(self.horizontalLayout_9, 1, 0, 1, 1)
         self.horizontalLayout_7 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_7.setContentsMargins(50, 20, 50, 20)
         self.horizontalLayout_7.setSpacing(10)
@@ -153,7 +153,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_7.addLayout(self.horizontalLayout_6)
         self.horizontalLayout_7.setStretch(0, 1)
         self.horizontalLayout_7.setStretch(1, 6)
-        self.gridLayout.addLayout(self.horizontalLayout_7, 2, 0, 1, 2)
+        self.gridLayout.addLayout(self.horizontalLayout_7, 2, 0, 1, 1)
         self.horizontalLayout_8 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_8.setContentsMargins(50, 20, 50, 20)
         self.horizontalLayout_8.setSpacing(10)
@@ -241,7 +241,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_8.setStretch(0, 1)
         self.horizontalLayout_8.setStretch(1, 3)
         self.horizontalLayout_8.setStretch(2, 3)
-        self.gridLayout.addLayout(self.horizontalLayout_8, 3, 0, 1, 2)
+        self.gridLayout.addLayout(self.horizontalLayout_8, 3, 0, 1, 1)
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_2.setContentsMargins(50, 20, 50, 20)
         self.horizontalLayout_2.setSpacing(10)
@@ -304,31 +304,16 @@ class Ui_MainWindow(object):
         self.horizontalLayout_2.addLayout(self.horizontalLayout_3)
         self.horizontalLayout_2.setStretch(0, 1)
         self.horizontalLayout_2.setStretch(1, 6)
-        self.gridLayout.addLayout(self.horizontalLayout_2, 4, 0, 1, 2)
+        self.gridLayout.addLayout(self.horizontalLayout_2, 4, 0, 1, 1)
+        self.horizontalLayout_10 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_10.setContentsMargins(50, -1, -1, -1)
+        self.horizontalLayout_10.setObjectName("horizontalLayout_10")
+        self.textEdit = QtWidgets.QTextEdit(self.centralwidget)
+        self.textEdit.setObjectName("textEdit")
+        self.horizontalLayout_10.addWidget(self.textEdit)
         self.verticalLayout_3 = QtWidgets.QVBoxLayout()
-        self.verticalLayout_3.setContentsMargins(0, -1, 0, -1)
+        self.verticalLayout_3.setContentsMargins(30, -1, 30, -1)
         self.verticalLayout_3.setObjectName("verticalLayout_3")
-        self.submit = QtWidgets.QPushButton(self.centralwidget)
-        self.submit.setStyleSheet("QPushButton {\n"
-"    background-color: #87b0f2;  /* 按钮背景色（比左侧标签深一点） */\n"
-"    color: white;  /* 文字白色 */\n"
-"    border: none;  /* 无边框 */\n"
-"    border-radius: 4px;  /* 圆角 */\n"
-"    padding: 8px 16px;  /* 内边距，按钮更饱满 */\n"
-"    font-size: 10pt;\n"
-"    minimum-height: 40px;  /* 按钮最小高度 */\n"
-"}\n"
-"/* 鼠标悬停时加深颜色 */\n"
-"QPushButton:hover {\n"
-"    background-color: #5A90C0;\n"
-"}\n"
-"/* 点击时更暗，模拟按压 */\n"
-"QPushButton:pressed {\n"
-"    background-color: #4A80B0;\n"
-"    transform: translateY(1px);  /* 轻微下移1px */\n"
-"}")
-        self.submit.setObjectName("submit")
-        self.verticalLayout_3.addWidget(self.submit)
         self.pushButton_2 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_2.setStyleSheet("QPushButton {\n"
 "    background-color: #87b0f2;  /* 按钮背景色（比左侧标签深一点） */\n"
@@ -350,6 +335,27 @@ class Ui_MainWindow(object):
 "}")
         self.pushButton_2.setObjectName("pushButton_2")
         self.verticalLayout_3.addWidget(self.pushButton_2)
+        self.submit = QtWidgets.QPushButton(self.centralwidget)
+        self.submit.setStyleSheet("QPushButton {\n"
+"    background-color: #87b0f2;  /* 按钮背景色（比左侧标签深一点） */\n"
+"    color: white;  /* 文字白色 */\n"
+"    border: none;  /* 无边框 */\n"
+"    border-radius: 4px;  /* 圆角 */\n"
+"    padding: 8px 16px;  /* 内边距，按钮更饱满 */\n"
+"    font-size: 10pt;\n"
+"    minimum-height: 40px;  /* 按钮最小高度 */\n"
+"}\n"
+"/* 鼠标悬停时加深颜色 */\n"
+"QPushButton:hover {\n"
+"    background-color: #5A90C0;\n"
+"}\n"
+"/* 点击时更暗，模拟按压 */\n"
+"QPushButton:pressed {\n"
+"    background-color: #4A80B0;\n"
+"    transform: translateY(1px);  /* 轻微下移1px */\n"
+"}")
+        self.submit.setObjectName("submit")
+        self.verticalLayout_3.addWidget(self.submit)
         self.pushButton = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton.setStyleSheet("QPushButton {\n"
 "    background-color: #87b0f2;  /* 按钮背景色（比左侧标签深一点） */\n"
@@ -371,10 +377,8 @@ class Ui_MainWindow(object):
 "}")
         self.pushButton.setObjectName("pushButton")
         self.verticalLayout_3.addWidget(self.pushButton)
-        self.gridLayout.addLayout(self.verticalLayout_3, 5, 0, 1, 1)
-        self.textEdit = QtWidgets.QTextEdit(self.centralwidget)
-        self.textEdit.setObjectName("textEdit")
-        self.gridLayout.addWidget(self.textEdit, 5, 1, 1, 1)
+        self.horizontalLayout_10.addLayout(self.verticalLayout_3)
+        self.gridLayout.addLayout(self.horizontalLayout_10, 5, 0, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
@@ -400,15 +404,15 @@ class Ui_MainWindow(object):
         self.label_3.setText(_translate("MainWindow", "空间范围"))
         self.label_6.setText(_translate("MainWindow", "南 (度数  . 分数)"))
         self.lineEdit_2.setText(_translate("MainWindow", "60.00"))
-        self.label_7.setText(_translate("MainWindow", "东"))
+        self.label_7.setText(_translate("MainWindow", "西"))
         self.lineEdit_5.setText(_translate("MainWindow", "-180.00"))
         self.label_8.setText(_translate("MainWindow", "北"))
         self.lineEdit_6.setText(_translate("MainWindow", "90.00"))
-        self.label_9.setText(_translate("MainWindow", "西"))
+        self.label_9.setText(_translate("MainWindow", "东"))
         self.lineEdit_7.setText(_translate("MainWindow", "180.00"))
         self.label_5.setText(_translate("MainWindow", "下载地址"))
         self.pushButton_3.setText(_translate("MainWindow", "选择路径"))
         self.lineEdit.setText(_translate("MainWindow", "D:\\FYData"))
-        self.submit.setText(_translate("MainWindow", "提交"))
-        self.pushButton_2.setText(_translate("MainWindow", "确认启动下载程序"))
+        self.pushButton_2.setText(_translate("MainWindow", "订单提交"))
+        self.submit.setText(_translate("MainWindow", "数据下载"))
         self.pushButton.setText(_translate("MainWindow", "退出程序"))

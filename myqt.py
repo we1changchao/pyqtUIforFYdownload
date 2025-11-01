@@ -11,7 +11,7 @@ from PyQt5.QtCore import QTimer
 # 1. 定义一个子线程类，用于执行外部脚本（不阻塞主线程）
 class ScriptThread(QThread):
     # 定义信号：用于向主线程发送执行结果（成功/失败信息）
-    result_signal = pyqtSignal(bool, str)  # (是否成功, 信息)  pyqtSignal(bool, str) 定义的是信号返回给主线程的参数类型
+    result_signal = pyqtSignal(bool, str,int)  # (是否成功, 信息)  pyqtSignal(bool, str) 定义的是信号返回给主线程的参数类型
     log_signal = pyqtSignal(str)  # 实时日志信号
     need_retry_signal = pyqtSignal()  # 无参数，仅通知需要重试
 
@@ -70,14 +70,12 @@ class ScriptThread(QThread):
                 self.need_retry_signal.emit()  # 发送需要重试的信号
 
             if return_code == 0:  # 外部程序正常执行并成功结束
-                self.result_signal.emit(True, "脚本执行成功！")
+                self.result_signal.emit(True, "脚本执行成功！", return_code)
             else:  # 外部程序异常终止
-                self.result_signal.emit(False, f"脚本执行失败，返回码: {return_code}")
+                self.result_signal.emit(False, "脚本执行失败", return_code)
 
-        except FileNotFoundError:
-            self.result_signal.emit(False, f"找不到路径下的脚本文件，路径：{self.script_path}")
         except Exception as e:
-            self.result_signal.emit(False, f"run函数运行出错：{str(e)}")
+            self.result_signal.emit(False, f"run函数运行出错：{str(e)}",-1)
 
 
 
@@ -143,7 +141,7 @@ class myMainWindow(QMainWindow, qt_designer.Ui_MainWindow):
             lineEdit.setStyleSheet("")
 
     """
-    执行第二个程序
+    执行第二个程序   数据下载
     """
     def get_ui_content(self):
         """执行第二个独立外部程序"""
@@ -170,9 +168,10 @@ class myMainWindow(QMainWindow, qt_designer.Ui_MainWindow):
 
         QMessageBox.information(self, "提示", "数据下载程序已启动。")
 
-    def on_second_finished(self, success, message):
+    def on_second_finished(self, success, message,return_code):
         """第二个脚本执行完毕后的处理"""
         print(f"[第二脚本完成] 成功: {success}, 消息: {message}")
+        print(return_code)
         if success:
             QMessageBox.information(self, "成功", message)
         else:
@@ -188,25 +187,19 @@ class myMainWindow(QMainWindow, qt_designer.Ui_MainWindow):
         if not log_message:
             return
 
-        # 定义正则表达式：匹配“下载进度: 数字%”格式（支持整数/小数百分比）
-        # 例如：“下载进度: 5%”、“下载进度: 10.50%”、“下载进度: 100%”
         pattern = r"下载进度: .*?%"
+        # 获取所有匹配的进度行（列表形式）
+        all_progress_lines = re.findall(pattern, log_message)
 
-        # 用正则匹配日志内容，提取所有符合格式的行
-        matches = re.findall(pattern, log_message)
-
-        # 如果有匹配到的内容，才显示在UI上
-        if matches:
-            # 提取完整的进度字符串（findall只返回分组，这里重新匹配完整内容）
-            progress_line = re.search(pattern, log_message).group()
-            # 格式化显示（添加时间戳）
+        if all_progress_lines:
             timestamp = time.strftime("%H:%M:%S", time.localtime())
-            formatted_log = f"[{timestamp}] {progress_line}\n"
-            # 显示到QTextEdit并滚动到底部
-            self.textEdit.append(formatted_log)
+            # 遍历所有匹配到的进度行，逐一显示
+            for progress_line in all_progress_lines:
+                formatted_log = f"[{timestamp}] {progress_line}\n"
+                self.textEdit.append(formatted_log)
+            # 滚动到最新内容
             self.textEdit.moveCursor(self.textEdit.textCursor().End)
 
-        """第二脚本的实时日志"""
         print(f"[下载数据脚本日志] {log_message}")
 
     def prepare_retry_download(self):
@@ -262,13 +255,26 @@ class myMainWindow(QMainWindow, qt_designer.Ui_MainWindow):
         # 可以显示一个提示，告知用户脚本已开始执行
         QMessageBox.information(self, "提示", "订单提交程序已启动，正在后台运行...")
 
-    def on_script_finished(self, success, message):
+    def on_script_finished(self, success, message,return_code):
         """子线程执行完毕后的回调函数（在主线程中运行，可安全操作GUI）"""
-        print(f"[脚本执行完成] 成功: {success}, 消息: {message}")
         if success:
             QMessageBox.information(self, "成功", message)
         else:
-            QMessageBox.critical(self, "失败", message)
+            # 3. 定义退出码与错误信息的映射关系
+            error_details = {
+                1: "浏览器初始化失败（可能是Chrome驱动未安装或浏览器版本不兼容）",
+                2: "登录失败（用户名/密码错误或验证码识别失败）",
+                3: "卫星数据选择失败（页面元素未找到或点击失败）",
+                4: "地理范围选择失败（坐标输入错误或页面交互异常）",
+                5: "提交订单失败（订单元素未找到或提交按钮点击失败）",
+                6: "查看订单失败（订单状态页面未加载或元素未找到）",
+                100: "程序运行时发生未捕获的异常（详见日志）",
+                -1: "脚本启动失败（可能是路径错误或权限问题）"
+            }
+            # 4. 根据return_code获取具体错误信息，默认显示未知错误
+            detail = error_details.get(return_code, f"未知错误（返回码: {return_code}）")
+            # 5. 显示详细错误信息
+            QMessageBox.critical(self, "失败", f"脚本执行失败：{detail}")
         # 线程结束后清理资源
         self.script_thread.quit()
         self.script_thread.wait()
@@ -276,8 +282,29 @@ class myMainWindow(QMainWindow, qt_designer.Ui_MainWindow):
         self.script_thread = None
 
     def on_script_log(self, log_message):
-        """处理实时日志输出"""
-        print(f"[提交订单脚本日志] {log_message}")
+        """处理实时日志输出，只提取[流程]后的核心标识内容"""
+        if not log_message:
+            return  # 空消息直接返回
+
+        # 按换行符分割日志内容（可能包含多行）
+        log_lines = log_message.split('\n')
+        timestamp = time.strftime("%H:%M:%S", time.localtime())  # 获取当前时间戳
+
+        for line in log_lines:
+            line = line.strip()  # 去除首尾空格
+            # 只处理包含"[流程]"的行
+            if "[流程]" in line:
+                # 使用正则提取 "[流程]" 后的核心标识（如=====xxx=====）
+                # 正则匹配规则：[流程]后面的所有字符，直到行尾（保留=====包裹的内容）
+                match = re.search(r'\[流程\](.*)', line)
+                if match:
+                    core_content = match.group(1).strip()  # 提取[流程]后的内容并去空格
+                    # 格式化输出（时间戳 + 核心流程标识）
+                    formatted_log = f"[{timestamp}] {core_content}\n"
+                    self.textEdit.append(formatted_log)  # 在textEdit中添加该行
+
+        # 滚动到最新内容
+        self.textEdit.moveCursor(self.textEdit.textCursor().End)
 
     """文件选择 槽 """
     def choose_folder(self):
