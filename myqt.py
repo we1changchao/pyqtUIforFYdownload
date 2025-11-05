@@ -97,7 +97,7 @@ class myMainWindow(QMainWindow, qt_designer.Ui_MainWindow):
         self.retry_timer.timeout.connect(self.retry_download)  # 一旦timeout信号触发，执行retry_download函数
 
         # 设置窗体大小
-        self.setFixedSize(1000, 800)  # 宽度=800，高度=600
+        self.setFixedSize(1356,1094)  # 宽度=800，高度=600
 
         # 设置LineEdit的验证
         self.setup_lineedit_validation(-90.0,90.0,self.lineEdit_2)  #南
