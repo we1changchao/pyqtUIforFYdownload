@@ -18,14 +18,8 @@ class Ui_MainWindow(object):
         MainWindow.setMinimumSize(QtCore.QSize(600, 400))
         MainWindow.setStyleSheet("background-color: #f6f6f6;\n"
 "\n"
-"QMainWindow {\n"
-"    border: 1px solid #409EFF; /* 窗口边框颜色（浅蓝色）*/\n"
-"}\n"
-"QMainWindow::title {\n"
-"    background-color: #409EFF; /* 标题栏背景色（蓝色）*/\n"
-"    color: white; /* 标题文字颜色（白色）*/\n"
-"    padding: 6px; /* 标题栏内边距，让文字不贴边 */\n"
-"}")
+"\n"
+"")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setStyleSheet("")
         self.centralwidget.setObjectName("centralwidget")
@@ -296,6 +290,7 @@ class Ui_MainWindow(object):
         font.setFamily("微软雅黑 Light")
         font.setPointSize(10)
         self.checkBox.setFont(font)
+        self.checkBox.setChecked(True)
         self.checkBox.setObjectName("checkBox")
         self.checkBox_2 = QtWidgets.QCheckBox(self.frame_4)
         self.checkBox_2.setGeometry(QtCore.QRect(70, 15, 300, 30))
@@ -303,6 +298,7 @@ class Ui_MainWindow(object):
         font.setFamily("微软雅黑 Light")
         font.setPointSize(10)
         self.checkBox_2.setFont(font)
+        self.checkBox_2.setChecked(True)
         self.checkBox_2.setObjectName("checkBox_2")
         self.label_13 = QtWidgets.QLabel(self.centralwidget)
         self.label_13.setGeometry(QtCore.QRect(70, 520, 341, 201))
@@ -491,6 +487,7 @@ class Ui_MainWindow(object):
         MainWindow.setMenuBar(self.menuBar)
 
         self.retranslateUi(MainWindow)
+        self.pushButton.clicked.connect(MainWindow.close) # type: ignore
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):

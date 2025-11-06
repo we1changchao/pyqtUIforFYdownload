@@ -7,6 +7,7 @@ from PyQt5.QtGui import QDoubleValidator
 import qt_designer
 import time
 import re
+from PyQt5.QtCore import QDate  # 日期处理核心类
 from PyQt5.QtCore import QTimer
 # 1. 定义一个子线程类，用于执行外部脚本（不阻塞主线程）
 class ScriptThread(QThread):
@@ -91,10 +92,12 @@ class myMainWindow(QMainWindow, qt_designer.Ui_MainWindow):
         self.submit.clicked.connect(self.get_ui_content)  # 点击“提交”  执行第二个程序(下载程序)
         self.pushButton_2.clicked.connect(self.run_other_script)  # 点击”确认启动下载程序“  执行第一个程序(提交订单)
 
-        # 初始化重试定时器
+        # 初始化重试相关（关键修改）
         self.retry_timer = QTimer(self)
-        self.retry_timer.setInterval(5 * 60 * 1000)  # 5分钟（毫秒）
-        self.retry_timer.timeout.connect(self.retry_download)  # 一旦timeout信号触发，执行retry_download函数
+        self.retry_timer.setInterval(5 * 60 * 1000)  # 5分钟
+        self.retry_timer.timeout.connect(self.retry_download)
+        self.is_retrying = False  # 新增：标记是否处于自动重试中
+        self.download_args = None  # 新增：统一保存下载参数（避免重复定义）
 
         # 设置窗体大小
         self.setFixedSize(1356,1094)  # 宽度=800，高度=600
@@ -104,6 +107,19 @@ class myMainWindow(QMainWindow, qt_designer.Ui_MainWindow):
         self.setup_lineedit_validation(-90.0,90.0,self.lineEdit_6)  #北
         self.setup_lineedit_validation(-180.0,180.0,self.lineEdit_5)  #东
         self.setup_lineedit_validation(-180.0,180.0,self.lineEdit_7)  #西
+
+
+        # 1. 设置日期显示格式（关键修改）
+        date_format = "yyyy/MM/dd"  # 强制“月(MM)”和“日(dd)”为两位，自动补零
+        self.dateEdit.setDisplayFormat(date_format)
+        self.dateEdit_2.setDisplayFormat(date_format)
+        # 1. 获取当前系统日期（今天）
+        today = QDate.currentDate()
+        # 2. 计算前一天日期（今天减 1 天）
+        prev_day = today.addDays(-1)
+        prevRe_day = today.addDays(-2)
+        self.dateEdit.setDate(prev_day)
+        self.dateEdit_2.setDate(prevRe_day)
 
     """
     限制输入空间范围函数
@@ -152,10 +168,22 @@ class myMainWindow(QMainWindow, qt_designer.Ui_MainWindow):
         # 保存download.py的参数（用于重试）
         self.download_args = (script_path, txt_path)
 
+        # 新增1：停止之前的重试（如果正在重试），避免冲突
+        if self.retry_timer.isActive():
+            self.retry_timer.stop()
+            self.is_retrying = False
+            self.statusBar().clearMessage()
+
         # 如果上一个线程还在运行，避免资源冲突
         if hasattr(self, 'second_thread') and self.second_thread.isRunning():
             QMessageBox.warning(self, "警告", "数据下载程序正在运行，请稍后再试。")
             return
+
+        # 新增2：清理之前的线程资源（防止内存泄漏）
+        if hasattr(self, 'second_thread'):
+            self.second_thread.quit()
+            self.second_thread.wait()
+            self.second_thread.deleteLater()
 
         # 创建独立线程实例
         self.second_thread = ScriptThread(script_path, txt_path)
@@ -172,16 +200,30 @@ class myMainWindow(QMainWindow, qt_designer.Ui_MainWindow):
         """第二个脚本执行完毕后的处理"""
         print(f"[第二脚本完成] 成功: {success}, 消息: {message}")
         print(return_code)
+
+        # 原有：清理线程资源（调整顺序到前面，更安全）
+        if hasattr(self, 'second_thread'):
+            self.second_thread.quit()
+            self.second_thread.wait()
+            self.second_thread.deleteLater()
+            self.second_thread = None
+
+        # 新增1：下载成功→停止重试
         if success:
             QMessageBox.information(self, "成功", message)
+            if self.retry_timer.isActive():
+                self.retry_timer.stop()
+                self.is_retrying = False
+                self.statusBar().showMessage("下载成功！自动重试已停止")
+        # 新增2：下载失败→停止重试
         else:
             QMessageBox.critical(self, "失败", message)
+            if self.retry_timer.isActive():
+                self.retry_timer.stop()
+                self.is_retrying = False
+                self.statusBar().showMessage("下载失败！自动重试已停止")
 
-        # 清理线程资源
-        self.second_thread.quit()
-        self.second_thread.wait()
-        self.second_thread.deleteLater()
-        self.second_thread = None  # 清除引用，防止野指针
+
 
     def on_second_log(self, log_message):
         if not log_message:
@@ -197,36 +239,74 @@ class myMainWindow(QMainWindow, qt_designer.Ui_MainWindow):
             for progress_line in all_progress_lines:
                 formatted_log = f"[{timestamp}] {progress_line}\n"
                 self.textEdit.append(formatted_log)
+
             # 滚动到最新内容
             self.textEdit.moveCursor(self.textEdit.textCursor().End)
 
-        print(f"[下载数据脚本日志] {log_message}")
+        # 按换行符分割日志内容（可能包含多行）
+        log_lines = log_message.split('\n')
+        timestamp = time.strftime("%H:%M:%S", time.localtime())  # 获取当前时间戳
+
+        for line in log_lines:
+            line = line.strip()  # 去除首尾空格
+            # 只处理包含"[流程]"的行
+            if "[流程]" in line:
+                # 使用正则提取 "[流程]" 后的核心标识（如=====xxx=====）
+                # 正则匹配规则：[流程]后面的所有字符，直到行尾（保留=====包裹的内容）
+                match = re.search(r'\[流程\](.*)', line)
+                if match:
+                    core_content = match.group(1).strip()  # 提取[流程]后的内容并去空格
+                    # 格式化输出（时间戳 + 核心流程标识）
+                    formatted_log = f"[{timestamp}] {core_content}\n"
+                    self.textEdit.append(formatted_log)  # 在textEdit中添加该行
+        self.textEdit.moveCursor(self.textEdit.textCursor().End)
+
 
     def prepare_retry_download(self):
         """ 准备重试：收到信号后提示并启动定时器"""
         if not self.download_args:
             QMessageBox.warning(self, "警告", "未找到download.py的执行参数，无法重试")
             return
-        # 显示提示并启动定时器
-        self.statusBar().showMessage("订单未准备成功，5分钟后自动重试下载程序...")
-        QMessageBox.information(self, "提示", "订单未准备成功，将在5分钟后自动执行download.py...")
-        self.retry_timer.start()  # 启动5分钟定时器
+        # 新增1：仅在未重试时弹窗（避免每次重试都弹）
+        if not self.is_retrying:
+            QMessageBox.information(self, "提示", "订单未准备成功，将每5分钟自动重试下载...")
+            self.is_retrying = True
+
+        # 新增2：仅在定时器未激活时启动（避免重复启动）
+        if not self.retry_timer.isActive():
+            self.retry_timer.start()
+        # 修改3：状态栏提示改为“循环重试中”
+        self.statusBar().showMessage("订单未准备成功，每5分钟自动重试中...")
 
     def retry_download(self):
-        """定时器触发后，执行download.py"""
-        self.retry_timer.stop()  # 停止定时器
-        if not self.download_args:
-            self.statusBar().showMessage("无download.py参数，重试失败")
+        # 新增1：检查重试状态和参数（防止异常）
+        if not self.is_retrying or not self.download_args:
+            self.retry_timer.stop()
+            self.statusBar().showMessage("重试停止：无有效参数或已取消")
             return
 
-        # 从保存的参数中获取路径和参数
+        # 新增2：检查上一个线程是否还在运行（避免并发）
+        if hasattr(self, 'second_thread') and self.second_thread.isRunning():
+            self.statusBar().showMessage("重试延迟：上一次下载程序仍在运行...")
+            return
+
+        # 新增3：清理上一个线程资源（防止内存泄漏）
+        if hasattr(self, 'second_thread'):
+            self.second_thread.quit()
+            self.second_thread.wait()
+            self.second_thread.deleteLater()
+
+        # 原有：启动新线程（修改信号绑定，重新监听重试信号）
         script_path, txt_path = self.download_args
-        # 启动download.py
         self.second_thread = ScriptThread(script_path, txt_path)
         self.second_thread.result_signal.connect(self.on_second_finished)
         self.second_thread.log_signal.connect(self.on_second_log)
+        self.second_thread.need_retry_signal.connect(self.prepare_retry_download)  # 新增：重新绑定重试信号
         self.second_thread.start()
-        self.statusBar().showMessage("正在重试执行download.py...")
+
+        # 修改4：状态栏提示添加时间戳，更直观
+        current_time = time.strftime("%H:%M:%S", time.localtime())
+        self.statusBar().showMessage(f"[{current_time}] 正在执行自动重试...每5分钟一次")
 
     """
     执行第一个程序

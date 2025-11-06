@@ -650,6 +650,9 @@ padding: 6px 0;  /* 上下内边距，让文字不贴边 */</string>
      <property name="text">
       <string>展示下载过程</string>
      </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
     </widget>
     <widget class="QCheckBox" name="checkBox_2">
      <property name="geometry">
@@ -668,6 +671,9 @@ padding: 6px 0;  /* 上下内边距，让文字不贴边 */</string>
      </property>
      <property name="text">
       <string>展示订单提交过程</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
      </property>
     </widget>
    </widget>
@@ -1023,5 +1029,22 @@ padding: 6px 0;  /* 上下内边距，让文字不贴边 */</string>
   <tabstop>comboBox</tabstop>
  </tabstops>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>769</x>
+     <y>792</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>878</x>
+     <y>865</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>
